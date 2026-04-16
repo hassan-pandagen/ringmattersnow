@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Inter, Merriweather } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Header } from "@/components/header";
@@ -51,6 +52,11 @@ export default function RootLayout({
           <main className="flex-1">{children}</main>
           <Footer />
         </ThemeProvider>
+        <Script
+          src="https://jsc.adskeeper.com/site/1056058.js"
+          strategy="afterInteractive"
+          async
+        />
       </body>
     </html>
   );

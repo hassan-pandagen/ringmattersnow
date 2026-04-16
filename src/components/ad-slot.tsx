@@ -1,59 +1,56 @@
 "use client";
 
-import { Suspense } from "react";
+import { useEffect, useRef } from "react";
+
+// Map logical placement IDs to AdsKeeper widget IDs.
+// Update these as you create/assign widgets in the AdsKeeper dashboard.
+const WIDGET_IDS: Record<string, string> = {
+  "article-top": "1935313",
+  "article-bottom": "1935313",
+  "in-article": "1935313",
+  "homepage-feed": "1935311",
+  "sidebar": "1930219",
+};
 
 interface AdSlotProps {
   id: string;
   format?: "banner" | "rectangle" | "inline";
 }
 
-function AdSkeleton({ format }: { format: string }) {
-  const heightClass =
-    format === "banner"
-      ? "min-h-[90px]"
-      : format === "rectangle"
-        ? "min-h-[250px]"
-        : "min-h-[250px]";
-
-  return (
-    <div
-      className={`${heightClass} w-full bg-[var(--skeleton)] rounded-xl animate-pulse flex items-center justify-center`}
-    >
-      <span className="text-xs text-[var(--text-muted)] uppercase tracking-widest">
-        Ad
-      </span>
-    </div>
-  );
-}
-
-function AdContent({ id, format = "rectangle" }: AdSlotProps) {
-  const heightClass =
-    format === "banner"
-      ? "min-h-[90px]"
-      : format === "rectangle"
-        ? "min-h-[250px]"
-        : "min-h-[250px]";
-
-  return (
-    <div
-      className={`${heightClass} w-full bg-[var(--bg-card)] rounded-xl border border-[var(--border)] flex items-center justify-center`}
-      data-ad-slot={id}
-      data-ad-format={format}
-    >
-      {/* AdKeeper script will inject here */}
-      <span className="text-xs text-[var(--text-muted)] uppercase tracking-widest">
-        Ad
-      </span>
-    </div>
-  );
+declare global {
+  interface Window {
+    _mgq?: unknown[];
+  }
 }
 
 export function AdSlot({ id, format = "rectangle" }: AdSlotProps) {
+  const widgetId = WIDGET_IDS[id];
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!widgetId) return;
+    window._mgq = window._mgq || [];
+    window._mgq.push(["_mgc.load"]);
+  }, [widgetId]);
+
+  const minHeight =
+    format === "banner" ? "min-h-[90px]" : "min-h-[250px]";
+
+  if (!widgetId) {
+    return (
+      <div
+        className={`${minHeight} w-full my-6 bg-[var(--skeleton)] rounded-xl flex items-center justify-center`}
+      >
+        <span className="text-xs text-[var(--text-muted)] uppercase tracking-widest">
+          Ad
+        </span>
+      </div>
+    );
+  }
+
   return (
-    <div className="my-6">
-      <Suspense fallback={<AdSkeleton format={format} />}>
-        <AdContent id={id} format={format} />
-      </Suspense>
+    <div ref={containerRef} className={`${minHeight} w-full my-6`}>
+      <div data-type="_mgwidget" data-widget-id={widgetId} />
     </div>
   );
 }
