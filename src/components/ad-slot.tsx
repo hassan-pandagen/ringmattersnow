@@ -8,7 +8,12 @@ const WIDGET_IDS: Record<string, string> = {
   "article-top": "1935313",
   "article-bottom": "1935313",
   "in-article": "1935313",
+  "inline-ad": "1935313",
+  "home-top": "1935313",
+  "home-bottom": "1935311",
   "homepage-feed": "1935311",
+  "category-top": "1935313",
+  "category-bottom": "1935311",
   "sidebar": "1930219",
 };
 
