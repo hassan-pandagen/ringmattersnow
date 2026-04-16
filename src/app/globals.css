@@ -1,26 +1,137 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/* ── Tailwind v4 CSS-First Theme ── */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Brand — Electric Indigo */
+  --color-brand: #4F46E5;
+  --color-brand-hover: #4338CA;
+  --color-brand-light: #6366F1;
+
+  /* Typography */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Merriweather", ui-serif, Georgia, serif;
+
+  /* Spacing & Layout */
+  --width-article: 720px;
+  --width-content: 1280px;
+
+  /* Animation */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ── Light Mode (default) ── */
+:root {
+  --bg: #FAFAFA;
+  --bg-card: #FFFFFF;
+  --text: #09090B;
+  --text-muted: #71717A;
+  --border: #E4E4E7;
+  --skeleton: #F4F4F5;
+}
+
+/* ── Dark Mode ── */
+.dark {
+  --bg: #09090B;
+  --bg-card: #18181B;
+  --text: #F4F4F5;
+  --text-muted: #A1A1AA;
+  --border: #27272A;
+  --skeleton: #27272A;
+}
+
+/* ── Base ── */
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ── Article Typography ── */
+.prose-article {
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: var(--text);
+}
+
+.prose-article p {
+  margin-bottom: 1.5rem;
+}
+
+.prose-article h2 {
+  font-family: var(--font-sans);
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+
+.prose-article h3 {
+  font-family: var(--font-sans);
+  font-size: 1.375rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose-article a {
+  color: var(--color-brand);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.prose-article a:hover {
+  color: var(--color-brand-hover);
+}
+
+.prose-article img {
+  border-radius: 0.75rem;
+  margin: 2rem 0;
+  width: 100%;
+  height: auto;
+}
+
+.prose-article blockquote {
+  border-left: 3px solid var(--color-brand);
+  padding-left: 1.25rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.prose-article ul,
+.prose-article ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.prose-article li {
+  margin-bottom: 0.5rem;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  border-radius: 3px;
+}
+
+/* ── Selection ── */
+::selection {
+  background-color: var(--color-brand);
+  color: white;
 }
